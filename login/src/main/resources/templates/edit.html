@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>お問い合わせ編集</title>
+  </head>
+  <body>
+    <h2>お問い合わせ編集</h2>
+    <form
+      th:action="@{/admin/contacts/{id}(id=${contact.id})}"
+      method="post"
+      th:object="${contact}"
+      id="updateForm"
+    >
+      <table border="1">
+        <tr>
+          <th>姓</th>
+          <td><input type="text" th:field="*{lastName}" /></td>
+        </tr>
+        <tr>
+          <th>名</th>
+          <td><input type="text" th:field="*{firstName}" /></td>
+        </tr>
+        <tr>
+          <th>メールアドレス</th>
+          <td><input type="email" th:field="*{email}" /></td>
+        </tr>
+        <tr>
+          <th>電話番号</th>
+          <td><input type="tel" th:field="*{phone}" /></td>
+        </tr>
+        <tr>
+          <th>郵便番号</th>
+          <td><input type="text" th:field="*{zipCode}" /></td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td><input type="text" th:field="*{address}" /></td>
+        </tr>
+        <tr>
+          <th>建物名</th>
+          <td><input type="text" th:field="*{buildingName}" /></td>
+        </tr>
+        <tr>
+          <th>お問い合わせ種別</th>
+          <td>
+            <select th:field="*{contactType}">
+              <option value="services">サービスに関するお問い合わせ</option>
+              <option value="technicalQuestions">技術的なお問い合わせ</option>
+              <option value="others">その他</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>内容</th>
+          <td><textarea th:field="*{body}" rows="4" cols="50"></textarea></td>
+        </tr>
+      </table>
+      <button type="submit" onclick="submitForm()">更新</button>
+    </form>
+    <form th:action="@{/admin/contacts/delete}" method="post" id="deleteForm">
+      <input type="hidden" name="_method" value="delete" />
+      <input type="hidden" name="id" th:value="${contact.id}" />
+      <button type="submit" name="delete" value="delete" onclick="deleteForm()">
+        削除
+      </button>
+    </form>
+    <br />
+    <a th:href="@{/admin/contacts}">戻る</a>
+  </body>
+
+  <script th:inline="javascript">
+    function submitForm() {
+      var form = document.getElementById("updateForm");
+      form.submit();
+    }
+
+    function deleteForm() {
+      var form = document.getElementById("deleteForm");
+      form.submit();
+    }
+  </script>
+</html>
